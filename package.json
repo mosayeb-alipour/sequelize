@@ -1,0 +1,22 @@
+{
+  "name": "sequelize",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "start": "nodemon node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@sequelize/core": "^7.0.0-alpha.46",
+    "@sequelize/mysql": "^7.0.0-alpha.46",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.3"
+  }
+}
