@@ -1,5 +1,5 @@
 const {Model,DataTypes} = require("@sequelize/core");
-const {sequelize} = require("../configs/db.config");
+const {sequelize} = require("../../configs/db.config");
 const User = sequelize.define('order', {
     username: DataTypes.STRING,
     product: DataTypes.STRING ,

@@ -1,2 +1,2 @@
 const sequelize = require("./configs/db.config");
-require("./examples/m-3");
+require("./examples/crud/c-1");

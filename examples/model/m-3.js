@@ -1,5 +1,5 @@
 const {Model,DataTypes} = require("@sequelize/core");
-const {sequelize} = require("../configs/db.config");
+const {sequelize} = require("../../configs/db.config");
 const Blog = sequelize.define('blog', {
     id:{
         type:DataTypes.INTEGER,
