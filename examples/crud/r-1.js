@@ -1,4 +1,4 @@
-const {DataTypes, Op, where} = require("@sequelize/core");
+const {DataTypes, Op, where, sql} = require("@sequelize/core");
 const {sequelize} = require("../../configs/db.config");
 const e = require("express");
 const userList = [{
@@ -26,7 +26,7 @@ const userList = [{
     birthday: new Date("1991-04-04")
 },
 {
-    firstname: 'alia',
+    firstname: 'namiar',
     lastname: 'namiar',
     username: 'ali0',
     bio: 'hel boy world',
@@ -71,7 +71,7 @@ const userList = [{
     age: 25,
     birthday: new Date("2000-04-04")
 },{
-    firstname: 'jkjjkyiurt',
+    firstname: 'hiuhkh',
     lastname: 'hiuhkh',
     username: 'hghjkg99',
     bio: 'hello whggdt  jyuiiyug orld',
@@ -235,18 +235,52 @@ async function main() {
 // console.log("max all data for age:",max);
 // const sum = await User.sum('age');//----------------------------جمع سنین
 // console.log("sum all age users:",sum);
+// const users = await User.findAll({
+//     attributes:['age',[sequelize.fn('COUNT',sequelize.col('age')),'age_count']],//----------------------------شمارش تعداد کاربران بر اساس سن
+//     group:['age'],//----------------------------گروه بندی بر اساس سن
+//     raw:true
+// });
+// console.log(users);
+// const userExclude = await User.findAll({
+//     attributes:{exclude:['bio','birthday']},//----------------------------حذف ستون های بیو و تاریخ تولد از نتایج
+//     raw:true    
+// }
+// );
+// console.log(userExclude);
+// const users = await User.findAll({
+//     where:{
+//         firstname:{
+//             [Op.eq]: sql.attribute('lastname')//----------------------------فیلتر نام برابر با نام خانوادگی
+//         }
+//     },
+//     attributes:['id','firstname','lastname'],//----------------------------انتخاب ستون های شناسه، نام و نام خانوادگی
+//     order:[['id','DESC']],//----------------------------مرتب سازی بر اساس شناسه به صورت نزولی
+//     raw:true
+// })
+// console.log(users);
 const users = await User.findAll({
-    attributes:['age',[sequelize.fn('COUNT',sequelize.col('age')),'age_count']],//----------------------------شمارش تعداد کاربران بر اساس سن
-    group:['age'],//----------------------------گروه بندی بر اساس سن
+    where:{
+        // firstname:{
+        //     // [Op.regexp]: "a$"//----------------------------فیلتر نام هایی که با حرف a تمام میشوند
+        //     // [Op.regexp]: "^[ah]"//----------------------------فیلتر نام هایی که با حرف a یا h شروع میشوند
+        //     // [Op.notRegexp]: "a$"//----------------------------فیلتر نام هایی که با حرف a تمام نمیشوند
+        //     // [Op.like]: '%a%'//----------------------------فیلتر نام هایی که شامل حرف a هستند
+        //     // [Op.like]: 'a%'//----------------------------فیلتر نام هایی که با حرف a شروع میشوند
+        //     // [Op.notLike]: 'a%'//----------------------------فیلتر نام هایی که با حرف a شروع نمیشوند
+        //     // [Op.notLike]: '%a%'//----------------------------فیلتر نام هایی که شامل حرف a نیستند
+        //     [Op.in]: ['akbar','akr']//----------------------------فیلتر نام هایی که akbar یا akr هستند
+        // }
+        age:{
+            // [Op.notIn]: [22,28]//----------------------------فیلتر سن هایی که 22 یا 28 نیستند
+            // [Op.is]:null, //-----ایتم های را نشان میدهد که سن انها خالی باشد
+            [Op.isNot]:null //------مواردی را نشان می دهد که سن انها خالی نیست
+        }
+    },
+    attributes:['id','firstname','lastname','age'],//----------------------------انتخاب ستون های شناسه، نام و نام خانوادگی
+    order:[['id','DESC']],//----------------------------مرتب سازی بر اساس شناسه به صورت نزولی
     raw:true
-});
+})
 console.log(users);
-const userExclude = await User.findAll({
-    attributes:{exclude:['bio','birthday']},//----------------------------حذف ستون های بیو و تاریخ تولد از نتایج
-    raw:true    
-}
-);
-console.log(userExclude);
 }
 
 main();//----------------------------اجرای تابع اصلی
